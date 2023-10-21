@@ -1,0 +1,69 @@
+put the mapping file 
+
+curl -X PUT "localhost:9200/poem-metaphor?pretty" -H "Content-Type: application/json" -d @PoemMetaphor_mapping_file.json
+
+
+put the data file
+curl -X POST "localhost:9200/poem-metaphor/_bulk?pretty" -H "Content-Type: application/json" --data-binary @PoemMetaphor_data_file.json
+
+delete folder
+curl -X DELETE "localhost:9200/poem-metaphor?pretty"
+
+"දුක්‌ පස්‌ කඳු"
+
+
+Query 01 search for metaphors
+GET /poem-metaphor/_search
+{
+  "query": {
+    "nested": {
+      "path": "metaphors",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "match": {
+                "metaphors.metaphor": "කාලයේ සැඩ සුළඟ"
+              }
+            }
+          ]
+        }
+      },
+      "score_mode": "avg"
+    }
+  }
+}
+
+GET /poem-metaphor/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "poet": "පිය­සීලි විජේ­නා­යක"
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET /poem-metaphor/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "multi_match": {
+            "query": "කාලයේ සැඩ සුළඟ",
+            "fields": [
+              "poem_name",
+              "poem"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

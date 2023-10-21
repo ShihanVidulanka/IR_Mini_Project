@@ -1,0 +1,94 @@
+{
+    "settings": {
+        "index": {
+            "analysis": {
+                "analyzer": {
+                    "plain": {
+                        "filter": [],
+                        "tokenizer": "standard"
+                    },
+                    "case_insensitive": {
+                        "filter": [
+                            "lowercase"
+                        ],
+                        "tokenizer": "standard"
+                    },
+                    "inflections": {
+                        "filter": [
+                            "porter_stem"
+                        ],
+                        "tokenizer": "standard"
+                    },
+                    "case_insensitive_and_inflections": {
+                        "filter": [
+                            "lowercase",
+                            "porter_stem"
+                        ],
+                        "tokenizer": "standard"
+                    }
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "reviews": {
+                "type": "nested",
+                "properties": {
+                    "review_title": {
+                        "type": "text",
+                        "analyzer": "plain",
+                        "fields": {
+                            "case_insensitive": {
+                                "type": "text",
+                                "analyzer": "case_insensitive"
+                            },
+                            "inflections": {
+                                "type": "text",
+                                "analyzer": "inflections"
+                            },
+                            "case_insensitive_and_inflections": {
+                                "type": "text",
+                                "analyzer": "case_insensitive_and_inflections"
+                            }
+                        }
+                    },
+                    "review_body": {
+                        "type": "text",
+                        "analyzer": "plain",
+                        "fields": {
+                            "case_insensitive": {
+                                "type": "text",
+                                "analyzer": "case_insensitive"
+                            },
+                            "inflections": {
+                                "type": "text",
+                                "analyzer": "inflections"
+                            },
+                            "case_insensitive_and_inflections": {
+                                "type": "text",
+                                "analyzer": "case_insensitive_and_inflections"
+                            }
+                        }
+                    },
+                    "product_id": {
+                        "type": "keyword"
+                    },
+                    "language": {
+                        "type": "keyword"
+                    },
+                    "product_category": {
+                        "type": "keyword"
+                    },
+                    "stars": {
+                        "type": "integer"
+                    },
+                    "published_date": {
+                        "type": "date",
+                        "format": "MM/dd/yyyy"
+                    }
+                }
+            }
+        }
+    }
+}

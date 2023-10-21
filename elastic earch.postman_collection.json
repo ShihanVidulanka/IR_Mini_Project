@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "d78318cd-b600-4d24-a1a3-ffd19663b3ac",
+		"name": "elastic earch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23553478"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/metaphors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"searchPhrase\":\"ඇත්‌ රජුනි හිමි\",\r\n    \"poetry\":false,\r\n    \"title\":false,\r\n    \"poet\":false,\r\n    \"metaphor\":true\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/metaphors",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metaphors"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

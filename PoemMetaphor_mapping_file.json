@@ -1,0 +1,109 @@
+{
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "sinhala_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "icu_tokenizer",
+                    "char_filter": [
+                        "punctuation_char_filter"
+                    ]
+                },
+                "sinhala_search_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "icu_tokenizer",
+                    "char_filter": [
+                        "punctuation_char_remove_filter"
+                    ]
+                }
+            },
+            "char_filter": {
+                "punctuation_char_filter": {
+                    "type": "mapping",
+                    "mappings": [
+                        ".=>",
+                        "|=>",
+                        "-=>",
+                        "_=>",
+                        "'=>",
+                        "/=>",
+                        ",=>"
+                    ]
+                },
+                "punctuation_char_remove_filter": {
+                    "type": "mapping",
+                    "mappings": [
+                        ".=>\\u0020",
+                        "|=>\\u0020",
+                        "-=>\\u0020",
+                        "_=>\\u0020",
+                        "'=>\\u0020",
+                        "/=>\\u0020",
+                        ",=>\\u0020"
+                    ]
+                }
+            },
+            "filter": {
+                "edge_n_gram_filter": {
+                    "type": "edge_ngram",
+                    "min_gram": "2",
+                    "max_gram": "20",
+                    "side": "front"
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "book_or_article": {
+                "type": "text",
+                "analyzer": "sinhala_analyzer",
+                "search_analyzer": "sinhala_search_analyzer"
+            },
+            "year": {
+                "type": "text",
+                "fields": {
+                    "standard_date": {
+                        "type": "date",
+                        "format": "yyyy||dd-MM-yyyy"
+                    }
+                }
+            },
+            "poet": {
+                "type": "text",
+                "analyzer": "sinhala_analyzer",
+                "search_analyzer": "sinhala_search_analyzer"
+            },
+            "poem_name": {
+                "type": "text",
+                "analyzer": "sinhala_analyzer",
+                "search_analyzer": "sinhala_search_analyzer"
+            },
+            "poem": {
+                "type": "text",
+                "analyzer": "sinhala_analyzer",
+                "search_analyzer": "sinhala_search_analyzer"
+            },
+            "metaphors": {
+                "type": "nested",
+                "properties": {
+                    "metaphor": {
+                        "type": "text",
+                        "analyzer": "sinhala_analyzer",
+                        "search_analyzer": "sinhala_search_analyzer"
+                    },
+                    "target": {
+                        "type": "text",
+                        "analyzer": "sinhala_analyzer",
+                        "search_analyzer": "sinhala_search_analyzer"
+                    },
+                    "source": {
+                        "type": "text",
+                        "analyzer": "sinhala_analyzer",
+                        "search_analyzer": "sinhala_search_analyzer"
+                    }
+                }
+            }
+        }
+    }
+}
