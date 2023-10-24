@@ -3,10 +3,9 @@ export declare class MetaphorsController {
     private readonly metaphorsService;
     constructor(metaphorsService: MetaphorsService);
     getMetaphors(searchParams: {
-        searchPhrase: string;
-        poetry: boolean;
-        poet: boolean;
-        title: boolean;
-        metaphor: boolean;
+        poetry: string;
+        poet: string;
+        title: string;
+        metaphor: string;
     }): any;
 }

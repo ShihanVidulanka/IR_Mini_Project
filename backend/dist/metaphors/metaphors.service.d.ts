@@ -4,10 +4,5 @@ export declare class MetaphorsService {
     result_size: number;
     constructor(elasticsearchService: ElasticsearchService);
     GetAll(): Promise<any>;
-    searchAll(searchPhrase: string): Promise<any>;
-    getMetaphors(searchPhrase: string): Promise<any>;
-    getMetaphorsByPoet(searchPhrase: string): Promise<any>;
-    getMetaphorsByPoemandTitle(searchPhrase: string): Promise<any>;
-    getMetaphorsByPoem(searchPhrase: string): Promise<any>;
-    getMetaphorsByPoemTitle(searchPhrase: string): Promise<any>;
+    Search(poetry: string, poet: string, title: string, metaphor: string): Promise<any>;
 }

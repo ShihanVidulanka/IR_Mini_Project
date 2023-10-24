@@ -9,30 +9,20 @@ export class MetaphorsController {
   getMetaphors(
     @Body()
     searchParams: {
-      searchPhrase: string;
-      poetry: boolean;
-      poet: boolean;
-      title: boolean;
-      metaphor: boolean;
+      poetry: string;
+      poet: string;
+      title: string;
+      metaphor: string;
     },
   ): any {
-    const { searchPhrase, poetry, poet, title, metaphor } = searchParams;
-    console.log(searchPhrase, poetry, poet, title, metaphor);
+    const { poetry, poet, title, metaphor } = searchParams;
+    console.log(poetry, poet, title, metaphor);
 
-    if (searchPhrase == '') {
-      return this.metaphorsService.GetAll();
-    } else if (poetry && title) {
-      return this.metaphorsService.getMetaphorsByPoemandTitle(searchPhrase);
-    } else if (poetry) {
-      return this.metaphorsService.getMetaphorsByPoem(searchPhrase);
-    } else if (title) {
-      return this.metaphorsService.getMetaphorsByPoemTitle(searchPhrase);
-    } else if (poet) {
-      return this.metaphorsService.getMetaphorsByPoet(searchPhrase);
-    } else if (metaphor) {
-      return this.metaphorsService.getMetaphors(searchPhrase);
+    if (poetry != '' || title != '' || metaphor != '' || poet != '') {
+      return this.metaphorsService.Search(poetry, poet, title, metaphor);
     } else {
-      return this.metaphorsService.searchAll(searchPhrase);
+      console.log('All', poetry, poet, title, metaphor);
+      return this.metaphorsService.GetAll();
     }
   }
 }

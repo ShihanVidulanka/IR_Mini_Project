@@ -29,176 +29,67 @@ let MetaphorsService = class MetaphorsService {
                 },
             });
             const result = response.hits.hits;
-            console.log(result);
             return result;
         }
         catch (error) {
             return error;
         }
     }
-    async searchAll(searchPhrase) {
+    async Search(poetry, poet, title, metaphor) {
         try {
-            const response = await this.elasticsearchService.search({
+            const query = {
                 index: 'poem-metaphor',
                 body: {
                     size: this.result_size,
                     query: {
                         bool: {
-                            must: [
-                                {
-                                    multi_match: {
-                                        query: searchPhrase,
-                                        fields: ['poet', 'poem_name', 'poem'],
-                                    },
-                                },
-                            ],
+                            must: [],
                         },
                     },
                 },
-            });
-            const result = response.hits.hits;
-            console.log(result);
-            return result;
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async getMetaphors(searchPhrase) {
-        try {
-            const response = await this.elasticsearchService.search({
-                index: 'poem-metaphor',
-                body: {
-                    size: this.result_size,
-                    query: {
-                        nested: {
-                            path: 'metaphors',
-                            query: {
-                                bool: {
-                                    must: [
-                                        {
-                                            match: {
-                                                'metaphors.metaphor': searchPhrase,
-                                            },
+            };
+            if (poetry != '') {
+                query.body.query.bool.must.push({
+                    match: {
+                        poem: poetry,
+                    },
+                });
+            }
+            if (title != '') {
+                query.body.query.bool.must.push({
+                    match: {
+                        poem_name: title,
+                    },
+                });
+            }
+            if (poet != '') {
+                query.body.query.bool.must.push({
+                    match: {
+                        poet: poet,
+                    },
+                });
+            }
+            if (metaphor != '') {
+                query.body.query.bool.must.push({
+                    nested: {
+                        path: 'metaphors',
+                        query: {
+                            bool: {
+                                must: [
+                                    {
+                                        match: {
+                                            'metaphors.metaphor': metaphor,
                                         },
-                                    ],
-                                },
+                                    },
+                                ],
                             },
                         },
+                        score_mode: 'avg',
                     },
-                },
-            });
+                });
+            }
+            const response = await this.elasticsearchService.search(query);
             const result = response.hits.hits;
-            console.log(result);
-            return result;
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async getMetaphorsByPoet(searchPhrase) {
-        try {
-            const response = await this.elasticsearchService.search({
-                index: 'poem-metaphor',
-                body: {
-                    size: this.result_size,
-                    query: {
-                        bool: {
-                            must: [
-                                {
-                                    match: {
-                                        poet: searchPhrase,
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                },
-            });
-            const result = response.hits.hits;
-            console.log(result);
-            return result;
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async getMetaphorsByPoemandTitle(searchPhrase) {
-        try {
-            const response = await this.elasticsearchService.search({
-                index: 'poem-metaphor',
-                body: {
-                    size: this.result_size,
-                    query: {
-                        bool: {
-                            must: [
-                                {
-                                    multi_match: {
-                                        query: searchPhrase,
-                                        fields: ['poem_name', 'poem'],
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                },
-            });
-            const result = response.hits.hits;
-            console.log(result);
-            return result;
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async getMetaphorsByPoem(searchPhrase) {
-        try {
-            const response = await this.elasticsearchService.search({
-                index: 'poem-metaphor',
-                body: {
-                    size: this.result_size,
-                    query: {
-                        bool: {
-                            must: [
-                                {
-                                    match: {
-                                        poem: searchPhrase,
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                },
-            });
-            const result = response.hits.hits;
-            console.log(result);
-            return result;
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async getMetaphorsByPoemTitle(searchPhrase) {
-        try {
-            const response = await this.elasticsearchService.search({
-                index: 'poem-metaphor',
-                body: {
-                    size: this.result_size,
-                    query: {
-                        bool: {
-                            must: [
-                                {
-                                    match: {
-                                        poem_name: searchPhrase,
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                },
-            });
-            const result = response.hits.hits;
-            console.log(result);
             return result;
         }
         catch (error) {

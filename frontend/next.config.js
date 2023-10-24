@@ -20,7 +20,7 @@ const nextConfig = {
     return [
       {
         source: '/', // automatically becomes /docs/with-basePath
-        destination: '/test', // automatically becomes /docs/another
+        destination: '/metaphor', // automatically becomes /docs/another
         permanent: false,
       }
     ]
