@@ -22,7 +22,10 @@ let MetaphorsController = class MetaphorsController {
     getMetaphors(searchParams) {
         const { searchPhrase, poetry, poet, title, metaphor } = searchParams;
         console.log(searchPhrase, poetry, poet, title, metaphor);
-        if (poetry && title) {
+        if (searchPhrase == '') {
+            return this.metaphorsService.GetAll();
+        }
+        else if (poetry && title) {
             return this.metaphorsService.getMetaphorsByPoemandTitle(searchPhrase);
         }
         else if (poetry) {

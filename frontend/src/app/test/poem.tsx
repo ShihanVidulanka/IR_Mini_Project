@@ -29,10 +29,10 @@ export default function Poem(props: any) {
         ))}</p>
       </blockquote>
       <figcaption className="flex items-center justify-center space-x-3">
-        <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png" alt="profile picture" />
+        <img className="rounded-full w-9 h-9" src="https://static.vecteezy.com/system/resources/thumbnails/013/669/900/small/vintage-feather-quill-pen-with-black-ink-stroke-classic-stationery-illustration-isolated-on-white-background-free-vector.jpg" alt="profile picture" />
         <div className="space-y-0.5 font-medium dark:text-white text-left">
           <div>{props.serachResults.poet != null ? props.serachResults.poet : 'Unknown Poet'}</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">Developer at Open AI</div>
+          {/* <div className="text-sm text-gray-500 dark:text-gray-400">Developer at Open AI</div> */}
         </div>
       </figcaption>
       <table className="text-[white] mt-[20px] border-separate border-spacing-2 min-w-[400px] border border-slate-500 ...">

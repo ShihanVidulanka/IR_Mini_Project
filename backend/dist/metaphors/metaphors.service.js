@@ -15,28 +15,45 @@ const elasticsearch_1 = require("@nestjs/elasticsearch");
 let MetaphorsService = class MetaphorsService {
     constructor(elasticsearchService) {
         this.elasticsearchService = elasticsearchService;
+        this.result_size = 100;
+    }
+    async GetAll() {
+        try {
+            const response = await this.elasticsearchService.search({
+                index: 'poem-metaphor',
+                body: {
+                    size: this.result_size,
+                    query: {
+                        match_all: {},
+                    },
+                },
+            });
+            const result = response.hits.hits;
+            console.log(result);
+            return result;
+        }
+        catch (error) {
+            return error;
+        }
     }
     async searchAll(searchPhrase) {
         try {
             const response = await this.elasticsearchService.search({
                 index: 'poem-metaphor',
                 body: {
+                    size: this.result_size,
                     query: {
                         bool: {
                             must: [
                                 {
                                     multi_match: {
                                         query: searchPhrase,
-                                        fields: [
-                                            "poet",
-                                            "poem_name",
-                                            "poem"
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                                        fields: ['poet', 'poem_name', 'poem'],
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 },
             });
             const result = response.hits.hits;
@@ -52,6 +69,7 @@ let MetaphorsService = class MetaphorsService {
             const response = await this.elasticsearchService.search({
                 index: 'poem-metaphor',
                 body: {
+                    size: this.result_size,
                     query: {
                         nested: {
                             path: 'metaphors',
@@ -66,7 +84,6 @@ let MetaphorsService = class MetaphorsService {
                                     ],
                                 },
                             },
-                            score_mode: 'avg',
                         },
                     },
                 },
@@ -84,17 +101,18 @@ let MetaphorsService = class MetaphorsService {
             const response = await this.elasticsearchService.search({
                 index: 'poem-metaphor',
                 body: {
+                    size: this.result_size,
                     query: {
                         bool: {
                             must: [
                                 {
                                     match: {
-                                        poet: searchPhrase
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                                        poet: searchPhrase,
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 },
             });
             const result = response.hits.hits;
@@ -110,21 +128,19 @@ let MetaphorsService = class MetaphorsService {
             const response = await this.elasticsearchService.search({
                 index: 'poem-metaphor',
                 body: {
+                    size: this.result_size,
                     query: {
                         bool: {
                             must: [
                                 {
                                     multi_match: {
                                         query: searchPhrase,
-                                        fields: [
-                                            "poem_name",
-                                            "poem"
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                                        fields: ['poem_name', 'poem'],
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 },
             });
             const result = response.hits.hits;
@@ -140,17 +156,18 @@ let MetaphorsService = class MetaphorsService {
             const response = await this.elasticsearchService.search({
                 index: 'poem-metaphor',
                 body: {
+                    size: this.result_size,
                     query: {
                         bool: {
                             must: [
                                 {
                                     match: {
-                                        poem: searchPhrase
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                                        poem: searchPhrase,
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 },
             });
             const result = response.hits.hits;
@@ -166,17 +183,18 @@ let MetaphorsService = class MetaphorsService {
             const response = await this.elasticsearchService.search({
                 index: 'poem-metaphor',
                 body: {
+                    size: this.result_size,
                     query: {
                         bool: {
                             must: [
                                 {
                                     match: {
-                                        poem_name: searchPhrase
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                                        poem_name: searchPhrase,
+                                    },
+                                },
+                            ],
+                        },
+                    },
                 },
             });
             const result = response.hits.hits;

@@ -1,7 +1,7 @@
 "use client"
 import { log } from "console"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PoemDTO from "./PoemDTO.dto"
 import Poem from "./poem"
 import React from "react";
@@ -18,46 +18,37 @@ export default function Page(props: any) {
   const [POET, SetPOET] = useState(false);
   const [TITLE, SetTITLE] = useState(false);
   const [QUERY, SetQUERY] = useState('');
-  const [POEMS, SetPOEMS] = useState([
-    {
-          "book_or_article": "යසෝදරාවත",
-          "year": null,
-          "poet": null,
-          "poem_name": "යසෝදරාවත",
-          "poem": "මගේ ඇත්‌ රජුනි හිමි අද කොතැනක ද?",
-          "metaphors": [
-              {
-                  "metaphor": "ඇත්‌ රජුනි හිමි",
-                  "target": "සැමියා",
-                  "source": "ඇත්‌ රජු"
-              }
-          ]
-      }
-]);
+  const [POEMS, SetPOEMS] = useState(new Array<PoemDTO>);
 
   let mypoems: Array<String> = ['a', 'b', 'c', 'd', 'e']
   // eslint-disable-next-line react-hooks/rules-of-hooks
+
+  useEffect(() => {
+    getMetaphors();
+
+  }, []);
+
   async function getMetaphors() {
     console.log('working');
 
     const res = await fetch('http://localhost:3000/metaphors', {
       method: 'POST',
       headers: {
-     
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Content-Type': 'application/json',
+
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ "searchPhrase": QUERY, "metaphor": METAPHORS, "poetry": POETRY, "poet": POET, "title": TITLE }),
     }).then((res) => {
-      const data = res.json().then((data)=>{
-        const searchresults= new Array();
-    data.forEach((source:any) => {
-          searchresults.push(source._source); 
+      const data = res.json().then((data) => {
+        const searchresults = new Array();
+        data.forEach((source: any) => {
+          searchresults.push(source._source);
         })
         SetPOEMS(searchresults);
       })
-      
-      
+
+
       return data;
     }).catch((err) => {
       console.log(err);
@@ -66,16 +57,14 @@ export default function Page(props: any) {
 
   }
 
-
-
   return (
     <section>
       <div>
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" className="flex items-center">
-              <Image src="https://flowbite.com/docs/images/logo.svg" width={30} height={10} className="h-8 mr-3" alt="Flowbite Logo" />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+            <a href="poem-metaphor-high-resolution-logo-transparent.png" className="flex items-center">
+              <Image src="/find-metaphor-llogo.png.png" width={30} height={10} className="h-8 mr-3" alt="Flowbite Logo" />
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Find Metaphor</span>
             </a>
             <div className="flex md:order-1">
               <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" className="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1" >
@@ -139,28 +128,28 @@ export default function Page(props: any) {
                     <label id="laravel-checkbox-list" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">METAPHORS</label>
                   </div>
                 </li>
-           
+
               </ul>
             </div>
           </div>
         </nav>
-        
 
-<div>  
-   <div className="grid mb-8  border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-1 mx-auto my-[20px] space-y-[10px] justify-center">
-      {
-     POEMS.map((poem: any) => (
-      <div key={poem.index} className="w-[80%] justify-center mx-auto"> { /* Replace 'someKey' with a unique key for each element */}
-   
-      <Poem serachResults={poem} ></Poem>
 
-      </div>
-    ))
-      }
+        <div>
+          <div className="grid mb-8  border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-1 mx-auto my-[20px] space-y-[10px] justify-center">
+            {
+              POEMS.map((poem: any) => (
+                <div key={poem.index} className="w-[80%] justify-center mx-auto"> { /* Replace 'someKey' with a unique key for each element */}
 
-    </div>
-    </div>
-     
+                  <Poem serachResults={poem} ></Poem>
+
+                </div>
+              ))
+            }
+
+          </div>
+        </div>
+
       </div>
     </section>
   )

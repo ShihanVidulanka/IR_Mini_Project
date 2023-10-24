@@ -13,7 +13,18 @@ const nextConfig = {
                 ]
             }
         ]
-    }
+    },
+    basePath: '',
+ 
+  async redirects() {
+    return [
+      {
+        source: '/', // automatically becomes /docs/with-basePath
+        destination: '/test', // automatically becomes /docs/another
+        permanent: false,
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig

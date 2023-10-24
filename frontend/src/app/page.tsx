@@ -1,6 +1,5 @@
-
+import { redirect } from 'next/dist/server/api-utils';
+import Link from 'next/link';
 export default function Home() {
-  return (
-    <h1 className='text-center text-[70px]'>Hello, Next.js!</h1>
-  )
+  
 }
