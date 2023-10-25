@@ -49,7 +49,7 @@ export class MetaphorsService {
 
       if (poetry != '') {
         query.body.query.bool.must.push({
-          match: {
+          match_phrase: {
             poem: poetry,
           },
         });

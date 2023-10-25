@@ -6,19 +6,19 @@
                     "type": "custom",
                     "tokenizer": "icu_tokenizer",
                     "char_filter": [
-                        "punctuation_char_filter"
+                        "punctuation_filter"
                     ]
                 },
                 "sinhala_search_analyzer": {
                     "type": "custom",
                     "tokenizer": "icu_tokenizer",
                     "char_filter": [
-                        "punctuation_char_remove_filter"
+                        "punctuation_remove_filter"
                     ]
                 }
             },
             "char_filter": {
-                "punctuation_char_filter": {
+                "punctuation_filter": {
                     "type": "mapping",
                     "mappings": [
                         ".=>",
@@ -30,7 +30,7 @@
                         ",=>"
                     ]
                 },
-                "punctuation_char_remove_filter": {
+                "punctuation_remove_filter": {
                     "type": "mapping",
                     "mappings": [
                         ".=>\\u0020",
@@ -41,14 +41,6 @@
                         "/=>\\u0020",
                         ",=>\\u0020"
                     ]
-                }
-            },
-            "filter": {
-                "edge_n_gram_filter": {
-                    "type": "edge_ngram",
-                    "min_gram": "2",
-                    "max_gram": "20",
-                    "side": "front"
                 }
             }
         }
