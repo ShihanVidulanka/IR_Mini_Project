@@ -1,2 +1,3 @@
 # IR_Mini_Project
  
+The IR_Mini_Project is a Sinhala Metaphor Search Engine for poems, sourcing content from renowned works like "Yasodarawatha" and "Amawake Sandak Simbimi." The meticulously curated corpus is organized using mapper and data files. The application boasts a responsive Next.js frontend and a robust Nest.js backend, integrated with Elasticsearch for efficient metaphor searches. With a focus on speed, precision, and user-friendly interaction, this project aims to provide poetry enthusiasts and researchers with a powerful tool to explore and discover Sinhala poems enriched with metaphors.
